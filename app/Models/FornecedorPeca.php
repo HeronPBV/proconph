@@ -6,18 +6,16 @@ use App\Models\Fornecedor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Peca extends Model
+class FornecedorPeca extends Model
 {
     use HasFactory;
 
-    protected $table = 'config_pecas';
+    protected $table = 'fornecedor_peca';
 
     protected $guarded = ['created_at', 'updated_at'];
 
-    public function fornecedores()
+    public function fornecedor()
     {
-        return $this->belongsToMany(Fornecedor::class, 'fornecedor_peca', 'id_peca', 'id_fornecedor')
-                    ->withPivot('preco');
+        return $this->hasOne(Fornecedor::class, 'id', 'id_fornecedor');
     }
-
 }

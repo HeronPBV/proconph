@@ -927,3 +927,43 @@
 #56 C:\\Code\\Testes\\proconph\\vendor\\phpunit\\phpunit\\phpunit(107): PHPUnit\\TextUI\\Command::main()
 #57 {main}
 "} 
+[2024-09-30 19:48:15] production.ERROR: syntax error, unexpected token "{" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \"{\" at C:\\Code\\Testes\\proconph\\app\\Models\\OrdemDeServico.php:35)
+[stacktrace]
+#0 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(259): Symfony\\Component\\ErrorHandler\\Error\\FatalError->__construct(message: ''syntax error, ...', code: '0', error: '['type' => 4, '...', traceOffset: '0', traceArgs: '???', trace: '???')
+#1 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(246): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->fatalErrorFromPhpError(error: '['type' => 4, '...', traceOffset: '0')
+#2 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(270): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleShutdown()
+#3 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(0): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure:C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php:269-271}()
+#4 {main}
+"} 
+[2024-09-30 19:48:35] production.ERROR: syntax error, unexpected token "}", expecting variable or "{" or "$" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \"}\", expecting variable or \"{\" or \"$\" at C:\\Code\\Testes\\proconph\\app\\Models\\OrdemDeServico.php:37)
+[stacktrace]
+#0 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(259): Symfony\\Component\\ErrorHandler\\Error\\FatalError->__construct(message: ''syntax error, ...', code: '0', error: '['type' => 4, '...', traceOffset: '0', traceArgs: '???', trace: '???')
+#1 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(246): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->fatalErrorFromPhpError(error: '['type' => 4, '...', traceOffset: '0')
+#2 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(270): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleShutdown()
+#3 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(0): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure:C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php:269-271}()
+#4 {main}
+"} 
+[2024-09-30 19:48:37] production.ERROR: syntax error, unexpected token "}", expecting identifier or variable or "{" or "$" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \"}\", expecting identifier or variable or \"{\" or \"$\" at C:\\Code\\Testes\\proconph\\app\\Models\\OrdemDeServico.php:37)
+[stacktrace]
+#0 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(259): Symfony\\Component\\ErrorHandler\\Error\\FatalError->__construct(message: ''syntax error, ...', code: '0', error: '['type' => 4, '...', traceOffset: '0', traceArgs: '???', trace: '???')
+#1 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(246): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->fatalErrorFromPhpError(error: '['type' => 4, '...', traceOffset: '0')
+#2 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(270): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleShutdown()
+#3 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(0): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure:C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php:269-271}()
+#4 {main}
+"} 
+[2024-09-30 19:49:44] production.ERROR: syntax error, unexpected token "}" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \"}\" at C:\\Code\\Testes\\proconph\\app\\Models\\OrdemDeServico.php:42)
+[stacktrace]
+#0 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(259): Symfony\\Component\\ErrorHandler\\Error\\FatalError->__construct(message: ''syntax error, ...', code: '0', error: '['type' => 4, '...', traceOffset: '0', traceArgs: '???', trace: '???')
+#1 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(246): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->fatalErrorFromPhpError(error: '['type' => 4, '...', traceOffset: '0')
+#2 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(270): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleShutdown()
+#3 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(0): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure:C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php:269-271}()
+#4 {main}
+"} 
+[2024-09-30 19:56:24] production.ERROR: syntax error, unexpected token ";" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \";\" at C:\\Code\\Testes\\proconph\\app\\Models\\OrdemDeServico.php:48)
+[stacktrace]
+#0 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(259): Symfony\\Component\\ErrorHandler\\Error\\FatalError->__construct(message: ''syntax error, ...', code: '0', error: '['type' => 4, '...', traceOffset: '0', traceArgs: '???', trace: '???')
+#1 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(246): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->fatalErrorFromPhpError(error: '['type' => 4, '...', traceOffset: '0')
+#2 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(270): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleShutdown()
+#3 C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(0): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure:C:\\Code\\Testes\\proconph\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php:269-271}()
+#4 {main}
+"} 
