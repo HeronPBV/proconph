@@ -24,7 +24,7 @@ class Userlist extends Controller
     public function index(Request $request)
     {
         $permUser = Auth::user()->hasPermissionTo("list.users");
-		
+
         if (!$permUser) {
             return redirect()->route("list.Dashboard",['id'=>'1']);
         }
@@ -34,34 +34,34 @@ class Userlist extends Controller
                     session(["users" => array("status"=>"0", "orderBy"=>array("column"=>"created_at","sorting"=>"1"),"limit"=>"10")]);
                     $data = Session::all();
                 }
-    
+
                 $Filtros = new Security;
                 if($request->input()){
                 $Limpar = false;
                 if($request->input("limparFiltros") == true){
                     $Limpar = true;
                 }
-    
-                $arrayFilter = $Filtros->TratamentoDeFiltros($request->input(), $Limpar, ["users"]);	
+
+                $arrayFilter = $Filtros->TratamentoDeFiltros($request->input(), $Limpar, ["users"]);
                 if($arrayFilter){
-    
+
                 session(["users" => $arrayFilter]);
                 $data = Session::all();
                 }
                 }
-    
+
         $columnsTable = DisabledColumns::whereRouteOfList('list.users')
             ->first()
             ?->columns;
 
         $query =  DB::table("users")
-        ->leftjoin('model_has_roles as m', 'users.id', '=', 'm.model_id')	
-        ->leftjoin('roles as r', 'm.role_id', '=', 'r.id')	
+        ->leftjoin('model_has_roles as m', 'users.id', '=', 'm.model_id')
+        ->leftjoin('roles as r', 'm.role_id', '=', 'r.id')
         ->select(DB::raw("users.*, DATE_FORMAT(users.created_at, '%d/%m/%Y') as data_final, r.name as customizada"));
-               
+
         User::query();
 
-       
+
 
         $query->when(request('searchBy'), function ($q) {
             $q->where('users.name', 'like', '%' . request('searchBy') . '%');
@@ -86,7 +86,7 @@ class Userlist extends Controller
         // }
 
         $permUser = Auth::user()->hasPermissionTo("edit.users");
-		
+
         if (!$permUser) {
             return redirect()->route("list.Dashboard",['id'=>'1']);
         }
@@ -122,18 +122,18 @@ class Userlist extends Controller
         //     return redirect()->back();
         // }
 
-        $Usuarios =  DB::table("users")->where("email",$request->email)->first();      
+        $Usuarios =  DB::table("users")->where("email",$request->email)->first();
         if($Usuarios){
             return redirect()->route("form.store.user")->withErrors(['msg' => "E-mail já cadastrado em nossa base de dados."]);
-        }        
+        }
 
         $Array = array();
 
-     
+
 
         if($request->group_permissions == 'false' && $request->permission == $Array){
             return redirect()->route("form.store.user")->withErrors(['msg' => "Permissão não selecionada."]);
-        } 
+        }
 
 
         $Empresa = implode(',',$request->empresa);
@@ -141,9 +141,9 @@ class Userlist extends Controller
         if($request->permission){
             $request->permission = implode(',',$request->permission);
         }
-       
+
     //    print_r($request->all()); die;
-        $save = new stdClass;        
+        $save = new stdClass;
         $save->empresa = $Empresa;
         $save->name = $request->name;
         $save->email = $request->email;
@@ -155,18 +155,18 @@ class Userlist extends Controller
         DB::table("users")
             ->insert($save);
         $lastId = DB::getPdo()->lastInsertId();
-        
+
         $user = User::find($lastId);
 
         if ($request->group_permissions == false || $request->permission){
-            $permissions = explode(',', $request->permission);          
-            $allPermissions = Permission::get('id')->pluck('id')->toArray();     
+            $permissions = explode(',', $request->permission);
+            $allPermissions = Permission::get('id')->pluck('id')->toArray();
             $validPermissions = array_intersect($permissions, $allPermissions);
             $user->syncPermissions($validPermissions);
         } else {
             $user->syncRoles($request->group_permissions);
         }
-        
+
         return redirect()->route('list.users');
     }
 
@@ -195,7 +195,7 @@ class Userlist extends Controller
 
         $companies = DB::table("companies")->where('deleted','0')->where('status','1')->get();
 
-        $Usuarios =  DB::table("users")->where("id",$id)->first();      
+        $Usuarios =  DB::table("users")->where("id",$id)->first();
         $MinhasEmpresas = explode(',',$Usuarios->empresa);
         $EmpresaFinal = '';
         $Empresa = DB::table("companies")->where('deleted','0')->where('status','1')->whereIn("id",$MinhasEmpresas)->get();
@@ -218,7 +218,7 @@ class Userlist extends Controller
     {
         $user_id = auth()->user()->id;
 
-       
+
         $roles = Role::all();
         $user = User::findOrFail($user_id);
 
@@ -234,18 +234,18 @@ class Userlist extends Controller
 
         $companies = DB::table("companies")->where('deleted','0')->where('status','1')->whereIn('id',$EmpresaExplodeUsuarioAtual)->get();
 
-        $data = Session::all();       
-           
+        $data = Session::all();
+
         $EmpresaExplode = explode(',',$data['empresa']);
         $arr = '';
-        foreach ($EmpresaExplode as $emp => $key){   
-            if($key){          
+        foreach ($EmpresaExplode as $emp => $key){
+            if($key){
             $SelecionaEmpresa = DB::table("companies")->where('id',$key)->where('status','1')->first();
-    
+
             $arr .= $SelecionaEmpresa->name.',';
             }
         }
-    
+
 
         return Inertia::render('User/Profile', [
             'roles' => $roles,
@@ -257,7 +257,7 @@ class Userlist extends Controller
 
     public function updateProfile(Request $request)
     {
-      
+
         $user_id = auth()->user()->id;
 
         if($request->empresaSelect){
@@ -268,13 +268,13 @@ class Userlist extends Controller
 
         $url = null;
         $rules = 'jpg,png';
-        $FormatosLiberados = explode(",", $rules);    
+        $FormatosLiberados = explode(",", $rules);
         if($request->hasFile('profile_picture')){
             if($request->file('profile_picture')->isValid()){
                 if (in_array($request->file('profile_picture')->extension(),$FormatosLiberados)) {
                 $ext = $request->file('profile_picture')->extension();
                 $profile_picture = $request->file('profile_picture')->store('avatars/1');
-                $url = $profile_picture;		
+                $url = $profile_picture;
                 $url = explode('/',$url);
                 $url = $profile_picture;
                 } else {
@@ -284,9 +284,9 @@ class Userlist extends Controller
             }
         }
 
-      
-        
-        $save = new stdClass;        
+
+
+        $save = new stdClass;
         $save->name = $request->name;
         $save->email = $request->email;
         if($request->password){
@@ -297,12 +297,12 @@ class Userlist extends Controller
         }
         $save->phone = $request->phone;
 
-        $save = collect($save)->toArray();        
+        $save = collect($save)->toArray();
         DB::table("users")
         ->where("id", $user_id)
         ->update($save);
 
-             
+
         if($request->empresaSelect){
         session(['empresa' => $EmpresaImplode]);
         }
@@ -319,34 +319,34 @@ class Userlist extends Controller
         // }
 
 
-        $Usuarios =  DB::table("users")->where("email",$request->email)->where('id','<>',$user_id)->first();      
+        $Usuarios =  DB::table("users")->where("email",$request->email)->where('id','<>',$user_id)->first();
         if($Usuarios){
             return redirect()->route("form.update.user")->withErrors(['msg' => "E-mail já cadastrado em nossa base de dados."]);
-        } 
+        }
 
-        $Array = array();    
+        $Array = array();
 
         if($request->group_permissions == 'false' && $request->permission == $Array){
             return redirect()->route("form.update.user")->withErrors(['msg' => "Permissão não selecionada."]);
-        } 
+        }
 
 
         $Empresa = '';
         foreach($request->empresa as $emp => $key){
             foreach($key as $value){
-                if(is_int($value)){            
+                if(is_int($value)){
                 $Empresa .= $value.',';
                 }
-            }           
+            }
         }
        $Empresa = substr($Empresa,0,-1);
-     
+
         if($request->permission){
             $request->permission = implode(',',$request->permission);
-        }       
-         
+        }
+
     //    print_r($request->all()); die;
-        $save = new stdClass;        
+        $save = new stdClass;
         $save->empresa = $Empresa;
         $save->name = $request->name;
         $save->email = $request->email;
@@ -361,19 +361,19 @@ class Userlist extends Controller
         // echo '</pre>';
         // die;
 
-        $save = collect($save)->toArray();        
+        $save = collect($save)->toArray();
         DB::table("users")
         ->where("id", $user_id)
         ->update($save);
 
-        
-      
+
+
 
         $user = User::find($user_id);
 
         if ($request->group_permissions == false || $request->permission){
-            $permissions = explode(',', $request->permission);          
-            $allPermissions = Permission::get('id')->pluck('id')->toArray();     
+            $permissions = explode(',', $request->permission);
+            $allPermissions = Permission::get('id')->pluck('id')->toArray();
             $validPermissions = array_intersect($permissions, $allPermissions);
             $user->syncPermissions($validPermissions);
         } else {
@@ -381,7 +381,7 @@ class Userlist extends Controller
         }
 
         if($user_id == auth()->user()->id){
-        $Sessoes = Session::all();   
+        $Sessoes = Session::all();
         session(['empresa' => $Empresa]);
         }
 
@@ -395,7 +395,7 @@ class Userlist extends Controller
         // }
 
         $permUser = Auth::user()->hasPermissionTo("delete.users");
-		
+
         if (!$permUser) {
             return redirect()->route("list.Dashboard",['id'=>'1']);
         }
