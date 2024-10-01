@@ -17,6 +17,13 @@
 
                 <div>
                     <span class="p-float-label">
+                        <Dropdown class="w-full" v-model="form.id_proprietario" :options="clientes"
+                            optionLabel="name" dataKey="value" required filter="true" />
+                        <label for="status" class="text-sm">Proprietário</label>
+                    </span>
+                </div>
+                <div>
+                    <span class="p-float-label">
                         <Dropdown class="w-full" v-model="form.id_tipo_veiculo" :options="tiposVeiculos"
                             optionLabel="name" dataKey="value" required filter="true" />
                         <label for="status" class="text-sm">Tipo Veículo</label>
@@ -101,10 +108,15 @@ import { useToast } from "vue-toastification";
 
 const props = defineProps({
     errorBags: Object,
-    TiposVeiculos: Object
+    TiposVeiculos: Object,
+    Clientes: Object
 });
 
 const tiposVeiculos = $propsPage?.value?.TiposVeiculos?.map((val) => {
+    return { name: val.nome, value: val.id }
+});
+
+const clientes = $propsPage?.value?.Clientes?.map((val) => {
     return { name: val.nome, value: val.id }
 });
 
@@ -124,6 +136,8 @@ const today = new Date();
 const submited = ref(false);
 
 const form = useForm({
+
+    id_proprietario: "",
 
     id_tipo_veiculo: "",
 

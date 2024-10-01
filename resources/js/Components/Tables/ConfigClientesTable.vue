@@ -198,6 +198,10 @@
                         <span>Endereço</span>
                     </div>
                     <div class="flex items-center space-x-2">
+                        <Checkbox @change="toggleColumns" :binary="true" v-model="formColumns['columns']['veiculos_count']" />
+                        <span>Nº de veículos</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
                         <Checkbox @change="toggleColumns" :binary="true" v-model="formColumns['columns']['status']" />
                         <span>Status</span>
                     </div>
@@ -326,6 +330,25 @@
                                         </svg>
                                     </div>
                                 </th>
+                                <th v-if="formColumns.columns.veiculos_count" scope="col"
+                                    class="px-4 text-sm cursor-pointer text-center border-r group" @click="
+                                        orderBy = {
+                                            column: 'veiculos_count',
+                                            sorting: sortTable(sortVal.veiculos_count)
+                                                ? (sortVal.veiculos_count = 1)
+                                                : (sortVal.veiculos_count = 0),
+                                        }
+                                        ">
+                                    <div class="flex">
+                                        <span class="group-hover:text-indigo-800">Nº de veículos</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5 ml-auto group-hover:text-indigo-800" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                                        </svg>
+                                    </div>
+                                </th>
                                 <th v-if="formColumns.columns.status" scope="col"
                                     class="px-4 text-sm cursor-pointer text-center border-r group" @click="
                                         orderBy = {
@@ -424,6 +447,14 @@
                                     <div class="flex items-center">
                                         <div>
                                             <div class="font-medium text-gray-900">{{ data?.endereco }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td v-if="formColumns?.columns?.veiculos_count"
+                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                    <div class="flex items-center">
+                                        <div>
+                                            <div class="font-medium text-gray-900">{{ data?.veiculos_count }}</div>
                                         </div>
                                     </div>
                                 </td>
@@ -528,6 +559,7 @@ const sortVal = {
     email: 1,
     telefone: 1,
     endereco: 1,
+    veiculos_count: 1,
     status: 1,
     created_at: 1,
 };
@@ -540,6 +572,7 @@ const formColumns = useForm({
         email: validateColumnsVisibility("email"),
         telefone: validateColumnsVisibility("telefone"),
         endereco: validateColumnsVisibility("endereco"),
+        veiculos_count: validateColumnsVisibility("veiculos_count"),
         status: validateColumnsVisibility("status"),
         created_at: validateColumnsVisibility("created_at"),
     },

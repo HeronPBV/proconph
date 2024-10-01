@@ -185,6 +185,11 @@
 
                     <div class="flex items-center space-x-2">
                         <Checkbox @change="toggleColumns" :binary="true"
+                            v-model="formColumns['columns']['proprietario']" />
+                        <span>Tipo de veículo</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <Checkbox @change="toggleColumns" :binary="true"
                             v-model="formColumns['columns']['id_tipo_veiculo']" />
                         <span>Tipo de veículo</span>
                     </div>
@@ -242,10 +247,33 @@
                                     </svg>
                                 </th>
 
+                                <th v-if="formColumns.columns.proprietario" scope="col"
+                                    class="px-4 text-sm cursor-pointer text-center border-r group" @click="
+                                        orderBy = {
+                                            column: 'proprietario',
+                                            sorting: sortTable(sortVal.proprietario)
+                                                ? (sortVal.proprietario = 1)
+                                                : (sortVal.proprietario = 0),
+                                        }
+                                        ">
+                                    <div class="flex">
+                                        <span class="group-hover:text-indigo-800">Proprietário</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5 ml-auto group-hover:text-indigo-800" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                                        </svg>
+                                    </div>
+                                </th>
+
                                 <th v-if="formColumns.columns.id_tipo_veiculo" scope="col"
                                     class="px-4 text-sm cursor-pointer text-center border-r group" @click="
                                         orderBy = {
-                                            column: 'id_tipo_veiculo'
+                                            column: 'id_tipo_veiculo',
+                                            sorting: sortTable(sortVal.id_tipo_veiculo)
+                                                ? (sortVal.id_tipo_veiculo = 1)
+                                                : (sortVal.id_tipo_veiculo = 0),
                                         }
                                         ">
                                     <div class="flex">
@@ -415,6 +443,14 @@
                                     </div>
                                 </td>
 
+                                <td v-if="formColumns?.columns?.proprietario"
+                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                    <div class="flex items-center">
+                                        <div>
+                                            <div class="font-medium text-gray-900">{{ data?.proprietario.nome }}</div>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td v-if="formColumns?.columns?.id_tipo_veiculo"
                                     class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                                     <div class="flex items-center">
@@ -571,6 +607,7 @@ const getTipoVeiculo = (id) => {
 };
 
 const sortVal = {
+    proprietario: 1,
     id_tipo_veiculo: 1,
     placa: 1,
     modelo: 1,
@@ -584,6 +621,7 @@ const sortVal = {
 const formColumns = useForm({
     route_of_list: "list.ConfigVeiculos",
     columns: {
+        proprietario: validateColumnsVisibility("proprietario"),
         id_tipo_veiculo: validateColumnsVisibility("id_tipo_veiculo"),
         placa: validateColumnsVisibility("placa"),
         modelo: validateColumnsVisibility("modelo"),
