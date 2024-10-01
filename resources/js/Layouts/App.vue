@@ -13,15 +13,15 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" />
           </svg>
         </button>
-       
+
         <div class="flex ml-auto items-center">
           <div class="flex flex-col mr-3">
-            
+
             <span class="text-[15px] font-semibold">{{$page.props?.user?.name}}</span>
             <span class="text-[12px] text-gray-500">{{ $page.props?.user?.email }}</span>
           </div>
           <img class="rounded-full h-10 w-10 object-cover" alt="" :src="$page.props.user?.profile_picture" onerror="this.src='/images/profile_default.png';">
-        </div>      
+        </div>
 
         <Link class="flex text-gray-500/80 font-semibold space-x-3 items-center text-[14px]" href="/logout" method="post">
         <svg version="1.1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" style="enable-background:new 0 0 330 330;" class="h-5 w-5 ml-5 text-red-500" xml:space="preserve">
@@ -56,7 +56,7 @@
         <img class="mx-auto w-100" src="/images/logo_menu.png" alt="" srcset="" >
       </div>
       <hr>
- 
+
       <nav class="mt-6 list-none px-7">
         <div class="uppercase mb-4 text-[10px] font-bold tracking-widest text-gray-400/90">
           <span v-show="!toggleTextMenu">
@@ -76,9 +76,9 @@
            Gestão de Cadastros
           </span>
         </div>
-        
-              
-        
+
+
+
 
         <Link as="button" :href="route('list.DashboardCalendario')" v-if="$page.props.userPermissions.includes('list.DashboardCalendario')">
         <li class="flex text-gray-500/80 font-semibold space-x-3 items-center text-[14px] mt-2 hover:text-proconph">
@@ -91,24 +91,36 @@
 
 
 
-        <Link as="button" :href="route('list.ConfigCarros')" v-if="$page.props.userPermissions.includes('list.ConfigCarros')">
-        <li class="flex text-gray-500/80 font-semibold space-x-3 items-center text-[14px] mt-2 hover:text-proconph">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
-          </svg>
-          <span v-show="!toggleTextMenu">Carros &nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <Link as="button" :href="route('list.ConfigVeiculos')" v-if="$page.props.userPermissions.includes('list.ConfigVeiculos')">
+        <li class="flex text-gray-500/80 font-semibold space-x-3 items-center text-[14px] mt-2 hover:text-proconph items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+            </svg>
+
+          <span v-show="!toggleTextMenu">Veículos &nbsp;&nbsp;&nbsp;&nbsp;</span>
         </li>
         </Link>
 
-        
+        <Link as="button" :href="route('list.ConfigClientes')" v-if="$page.props.userPermissions.includes('list.ConfigClientes')">
+        <li class="flex text-gray-500/80 font-semibold space-x-3 items-center text-[14px] mt-2 hover:text-proconph items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+            </svg>
 
-    
+
+          <span v-show="!toggleTextMenu">Clientes &nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </li>
+        </Link>
+
+
+
+
 
 
         <li class="text-[14px] cursor-pointer mb-3" style="margin-top: 4%">
           <div @click="dropdownConfig = !dropdownConfig" class="flex text-gray-500/80 hover:text-proconph font-semibold space-x-3 items-center"
            v-if="$page.props.userPermissions.includes('list.companies') || $page.props.userPermissions.includes('list.Servicos') || $page.props.userPermissions.includes('list.Motorista') || $page.props.userPermissions.includes('list.Fornecedores') || $page.props.userPermissions.includes('list.Diarias')">
-            <div class="w-6 h=6">     
+            <div class="w-6 h=6">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
               </svg>
@@ -131,13 +143,13 @@
                 <span>Empresas &nbsp;&nbsp;</span>
               </li>
               </Link>
-                           
+
             </ul>
           </SlideUpDown>
         </li>
 
 <!-- #ModificaAqui -->
-     
+
 
         <div class="uppercase mt-9 mb-4 text-[10px] font-bold tracking-widest text-gray-400/90">
           <span v-show="!toggleTextMenu">
@@ -191,8 +203,8 @@
 
 
 
-       
-           <li class="text-[14px] cursor-pointer mb-3 space-x-3 space-y-3" style="margin-top:8%" > 
+
+           <li class="text-[14px] cursor-pointer mb-3 space-x-3 space-y-3" style="margin-top:8%" >
           <div @click="dropLogs = !dropLogs" class="flex text-gray-500/80 hover:text-proconph font-semibold space-x-3 items-center" v-if="$page.props.userPermissions.includes('list.logs') || $page.props.userPermissions.includes('list.logsErros')">
             <div class="w-6 h=6">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -225,7 +237,7 @@
                 <span>Erros &nbsp;&nbsp; &nbsp;&nbsp;</span>
               </li>
               </Link>
-                        
+
             </ul>
           </SlideUpDown>
         </li>
@@ -275,10 +287,10 @@
            Gestão de Cadastros
           </span>
         </div>
-        
 
-       
-               
+
+
+
 
         <Link as="button" :href="route('list.DashboardCalendario')" v-if="$page.props.userPermissions.includes('list.DashboardCalendario')">
         <li class="flex text-gray-500/80 font-semibold space-x-3 items-center text-[14px] mt-2 hover:text-proconph">
@@ -289,13 +301,13 @@
         </li>
         </Link>
 
-    
+
 
 
         <li class="text-[14px] cursor-pointer mb-3" style="margin-top: 4%">
           <div @click="dropdownConfig = !dropdownConfig" class="flex text-gray-500/80 hover:text-proconph font-semibold space-x-3 items-center"
            v-if="$page.props.userPermissions.includes('list.companies') || $page.props.userPermissions.includes('list.Servicos') || $page.props.userPermissions.includes('list.Motorista') || $page.props.userPermissions.includes('list.Fornecedores') || $page.props.userPermissions.includes('list.Diarias')">
-            <div class="w-6 h=6">     
+            <div class="w-6 h=6">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
               </svg>
@@ -318,13 +330,13 @@
                 <span>Empresas &nbsp;&nbsp;</span>
               </li>
               </Link>
-                           
+
             </ul>
           </SlideUpDown>
         </li>
 
 <!-- #ModificaAqui -->
-     
+
 
         <div class="uppercase mt-9 mb-4 text-[10px] font-bold tracking-widest text-gray-400/90">
           <span v-show="!toggleTextMenu">
@@ -367,8 +379,8 @@
           <span v-show="!toggleTextMenu">Permissões &nbsp;&nbsp;</span>
         </li>
         </Link>
-   
-           <li class="text-[14px] cursor-pointer mb-3 space-x-3 space-y-3" style="margin-top:8%" > 
+
+           <li class="text-[14px] cursor-pointer mb-3 space-x-3 space-y-3" style="margin-top:8%" >
           <div @click="dropLogs = !dropLogs" class="flex text-gray-500/80 hover:text-proconph font-semibold space-x-3 items-center" v-if="$page.props.userPermissions.includes('list.logsUsuario') || $page.props.userPermissions.includes('list.logsErros') || $page.props.userPermissions.includes('list.logs')">
             <div class="w-6 h=6">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -401,7 +413,7 @@
                 <span>Erros &nbsp;&nbsp; &nbsp;&nbsp;</span>
               </li>
               </Link>
-                        
+
             </ul>
           </SlideUpDown>
         </li>

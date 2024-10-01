@@ -3,12 +3,12 @@
   <div class="flex flex-wrap md:flex-nowrap justify-center items-center md:space-x-6">
     <!-- primeiro Card -->
     <div
-      class="bg-white rounded-3xl shadow-2xl p-4 w-full md:w-1/4 md:h-64 lg:w-64 m-2 md:m-0"
+      class="bg-white rounded-3xl shadow-lg p-4 w-full md:w-1/4 md:h-64 lg:w-64 m-2 md:m-0 border-card"
     >
       <div class="flex flex-col items-center">
         <h2 class="font-bold text-xl mb-2 text-black">Estatísticas</h2>
         <div class="flex space-x-4 mb-4">
-          <div class="flex flex-col items-center">
+          <div class="flex flex-col items-center h-full justify-between">
             <span class="font-bold text-2xl text-proconph">{{
               props.Registros.ativo || 0
             }}</span>
@@ -37,12 +37,10 @@
     </div>
     <!-- segundo Card -->
     <div
-      class="bg-white rounded-3xl shadow-2xl p-4 w-full md:w-1/4 md:h-64 lg:w-64 m-2 md:m-0"
+      class="bg-white rounded-3xl shadow-lg p-4 w-full md:w-1/4 md:h-64 lg:w-64 m-2 md:m-0 border-card"
     >
-      <div class="flex flex-col items-center">
-        <div class="mb-2 bg-proconph text-white rounded-full p-4 shadow-lg">
-          <img src="/images/profile_default.png" alt="Ícone de Meta" class="h-10 w-10" />
-        </div>
+      <div class="flex flex-col items-center h-full justify-between">
+
         <div class="text-center mb-2">
           <h2 class="font-bold text-xl">Ativos</h2>
           <p class="text-sm">Total de registros ativos preenchidos</p>
@@ -69,12 +67,10 @@
     </div>
     <!-- terceiro Card -->
     <div
-      class="bg-white rounded-3xl shadow-2xl p-4 w-full md:w-1/4 md:h-64 lg:w-64 m-2 md:m-0"
+      class="bg-white rounded-3xl shadow-lg p-4 w-full md:w-1/4 md:h-64 lg:w-64 m-2 md:m-0 border-card"
     >
-      <div class="flex flex-col items-center">
-        <div class="mb-2 bg-proconph text-white rounded-full p-4 shadow-lg">
-          <img src="/images/profile_default.png" alt="Ícone de Meta" class="h-10 w-10" />
-        </div>
+      <div class="flex flex-col items-center h-full justify-between">
+
         <div class="text-center mb-2">
           <h2 class="font-bold text-xl">Inativos</h2>
           <p class="text-sm">Total de registros inativos preenchidos</p>
@@ -101,14 +97,10 @@
     </div>
     <!-- quarto Card -->
     <div
-      class="bg-white rounded-3xl shadow-2xl p-4 w-full md:w-1/4 md:h-64 lg:w-64 m-2 md:m-0"
+      class="bg-white rounded-3xl shadow-lg p-4 w-full md:w-1/4 md:h-64 lg:w-64 m-2 md:m-0 border-card"
     >
-      <div class="flex flex-col items-center">
-        <div
-          class="flex items-center justify-center bg-proconph rounded-full h-16 w-16 mb-2"
-        >
-          <img src="/images/profile_default.png" alt="Ícone de Meta" class="h-10 w-10" />
-        </div>
+      <div class="flex flex-col items-center h-full justify-between">
+
         <h2 class="font-bold text-xl mb-1 text-black">Esse mês</h2>
         <p class="text mb-2 text-center text-black">Total este mês</p>
         <div class="relative pt-1 w-full mb-2">
@@ -136,14 +128,10 @@
     </div>
     <!-- Quinto Card -->
     <div
-      class="bg-white rounded-3xl shadow-2xl p-4 w-full md:w-1/4 md:h-64 lg:w-64 m-2 md:m-0"
+      class="bg-white rounded-3xl shadow-lg p-4 w-full md:w-1/4 md:h-64 lg:w-64 m-2 md:m-0 border-card"
     >
-      <div class="flex flex-col items-center">
-        <div
-          class="flex items-center justify-center bg-proconph rounded-full h-14 w-14 mb-1"
-        >
-          <img src="/images/profile_default.png" alt="Ícone de Meta" class="h-10 w-10" />
-        </div>
+      <div class="flex flex-col items-center h-full justify-between">
+
         <h2 class="font-bold text-xl mb-1 text-black">Painel</h2>
         <Link
           v-if="props.RotaCadastro"
@@ -210,5 +198,7 @@ if (porcentagemMes > 100) {
 }
 </script>
 <style scoped>
-/* Estilos opcionais adicionais para os cartões aqui */
+.border-card{
+    border: solid 1px #ebebeb;
+}
 </style>

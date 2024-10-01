@@ -1,4 +1,4 @@
-Primeiro Passo: (Web.php) 
+Primeiro Passo: (Web.php)
 
     NO TOPO: use App\Http\Controllers\@@TROCARAQUI@@@;
 
@@ -15,14 +15,14 @@ Primeiro Passo: (Web.php)
 	Route::get('@@TROCARAQUI@@@/RelatorioExcel', [@@TROCARAQUI@@@::class, 'exportarRelatorioExcel'])->name('get.Excel.@@TROCARAQUI@@@');
 
 
-Segundo Passo: 
+Segundo Passo:
 
     Copie e cole o controller modelo na pasta de controllers e coloque o mesmo nome que você usou no @@TROCARAQUI@@@
 
 
-Terceiro Passo: 
+Terceiro Passo:
 
-    Criar as Permissões no Banco de dados em utilizando esse sql e substituindo o @@TROCARAQUI@@@ pelo nome correto e onde tem 125 verificar no banco de dados qual o proximo numero da sequencia 
+    Criar as Permissões no Banco de dados em utilizando esse sql e substituindo o @@TROCARAQUI@@@ pelo nome correto e onde tem 125 verificar no banco de dados qual o proximo numero da sequencia
 
     INSERT INTO `permissions` (`name`, `guard_name`, `ordem`, `created_at`, `updated_at`) VALUES ('list.@@TROCARAQUI@@@', 'web', 125, NULL, NULL);
     INSERT INTO `permissions` (`name`, `guard_name`, `ordem`, `created_at`, `updated_at`) VALUES ('create.@@TROCARAQUI@@@', 'web', 125, NULL, NULL);
@@ -48,28 +48,28 @@ Quarto Passo: Colar esse codigo no Permission.vue logo apos o Modifica aqui, tro
 		</td>
 		<td class='p-2 whitespace-nowrap text-center'>
 		<Checkbox v-model='checked' :value='B' />
-		  
+
 		</td>
 		<td class='p-2 whitespace-nowrap text-center'>
 		<Checkbox v-model='checked' :value='C' />
-		  
+
 		</td>
 		<td class='p-2 whitespace-nowrap text-center'>
 		<Checkbox v-model='checked' :value='D' />
-		  
+
 		</td>
 		<td class='p-2 whitespace-nowrap text-center'>
 		<Checkbox v-model='checked' :value='E' />
-		  
-		</td>
-	  </tr>
 
-Quinto Passo: 
+		</td>
+    </tr>
+
+Quinto Passo:
 
     Crie a Listagem em Componentes/Table/ com @@TROCARAQUI@@@Table.vue
     Pode usar o modelo que esta disponivel, lmebrando que tem que trocar o nome.
 
-Sexto Passo: 
+Sexto Passo:
 
     Criar a pasta das views em resourcers/js com o mesmo no do @@TROCARAQUI@@@
     Dentro dessa pasta deverá ter inicialmente create, edit e o list.

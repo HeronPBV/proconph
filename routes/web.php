@@ -1,27 +1,28 @@
 <?php
 
-use App\Http\Controllers\Company;
-use App\Http\Controllers\Login;
-use App\Http\Controllers\Permissions;
-use App\Http\Controllers\ProtectedDownloads;
-use App\Http\Controllers\Userlist;
-use App\Http\Controllers\Utils;
+use Inertia\Inertia;
+use App\Models\Benefit;
 use App\Http\Controllers\logs;
-use App\Http\Controllers\logsErrosController;
-use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\SMTP;
+use App\Http\Controllers\Login;
+use App\Http\Controllers\Utils;
+use App\Http\Controllers\Company;
+use App\Http\Controllers\Userlist;
+use Illuminate\Support\Facades\DB;
 
-use App\Http\Controllers\ConfigCarros;
+use App\Http\Controllers\Dashboard;
 // ALTERAHEAD
 
 
-use App\Models\Benefit;
+use App\Http\Controllers\Permissions;
+use Illuminate\Support\Facades\Route;
 use App\Models\Office as ModelsOffice;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
-use Inertia\Inertia;
+use App\Http\Controllers\ConfigVeiculos;
+use App\Http\Controllers\ConfigClientes;
+use App\Http\Controllers\ProtectedDownloads;
+use App\Http\Controllers\logsErrosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,7 +57,7 @@ Route::middleware(['auth', 'has.temp.password'])->group(function () {
     Route::post('Profile', [Userlist::class, 'updateProfile'])
         ->name('update.userProfile');
 
-        
+
     Route::post('usuarios/{user_id}', [Userlist::class, 'delete'])
         ->name('form.delete.user');
 
@@ -113,8 +114,8 @@ Route::middleware(['auth', 'has.temp.password'])->group(function () {
     Route::post('logs/editar/{id}', [logs::class, 'update'])->name('update.logs');
     Route::post('logs/deletar/{id}', [logs::class, 'delete'])->name('delete.logs');
 
-    
-	
+
+
 	Route::get('logsErros', [logsErrosController::class, 'index'])->name('list.logsErros');
     Route::get('logsErros/criar', [logsErrosController::class, 'create'])->name('form.store.logsErros');
     Route::post('logsErros/criar', [logsErrosController::class, 'store'])->name('store.logsErros');
@@ -141,30 +142,42 @@ Route::get('logsUsuario', [logs::class, 'index'])->name('list.logsUsuario');
 
 
 
-Route::get('ConfigCarros', [ConfigCarros::class, 'index'])->name('list.ConfigCarros');
-	Route::post('ConfigCarros', [ConfigCarros::class, 'index'])->name('listP.ConfigCarros');
-    Route::get('ConfigCarros/criar', [ConfigCarros::class, 'create'])->name('form.store.ConfigCarros');
-    Route::post('ConfigCarros/criar', [ConfigCarros::class, 'store'])->name('store.ConfigCarros');
-    Route::get('ConfigCarros/editar/{id}', [ConfigCarros::class, 'edit'])->name('form.update.ConfigCarros');
-    Route::post('ConfigCarros/editar/{id}', [ConfigCarros::class, 'update'])->name('update.ConfigCarros');
-    Route::post('ConfigCarros/deletar/{id}', [ConfigCarros::class, 'delete'])->name('delete.ConfigCarros');
-	Route::post('ConfigCarros/deletarSelecionados/{id?}', [ConfigCarros::class, 'deleteSelected'])->name('deleteSelected.ConfigCarros');
-	Route::post('ConfigCarros/deletarTodos', [ConfigCarros::class, 'deletarTodos'])->name('deletarTodos.ConfigCarros');
-	Route::post('ConfigCarros/RestaurarTodos', [ConfigCarros::class, 'RestaurarTodos'])->name('RestaurarTodos.ConfigCarros');
-	Route::get('ConfigCarros/RelatorioExcel', [ConfigCarros::class, 'exportarRelatorioExcel'])->name('get.Excel.ConfigCarros');
+    Route::get('ConfigVeiculos', [ConfigVeiculos::class, 'index'])->name('list.ConfigVeiculos');
+	Route::post('ConfigVeiculos', [ConfigVeiculos::class, 'index'])->name('listP.ConfigVeiculos');
+    Route::get('ConfigVeiculos/criar', [ConfigVeiculos::class, 'create'])->name('form.store.ConfigVeiculos');
+    Route::post('ConfigVeiculos/criar', [ConfigVeiculos::class, 'store'])->name('store.ConfigVeiculos');
+    Route::get('ConfigVeiculos/editar/{id}', [ConfigVeiculos::class, 'edit'])->name('form.update.ConfigVeiculos');
+    Route::post('ConfigVeiculos/editar/{id}', [ConfigVeiculos::class, 'update'])->name('update.ConfigVeiculos');
+    Route::post('ConfigVeiculos/deletar/{id}', [ConfigVeiculos::class, 'delete'])->name('delete.ConfigVeiculos');
+	Route::post('ConfigVeiculos/deletarSelecionados/{id?}', [ConfigVeiculos::class, 'deleteSelected'])->name('deleteSelected.ConfigVeiculos');
+	Route::post('ConfigVeiculos/deletarTodos', [ConfigVeiculos::class, 'deletarTodos'])->name('deletarTodos.ConfigVeiculos');
+	Route::post('ConfigVeiculos/RestaurarTodos', [ConfigVeiculos::class, 'RestaurarTodos'])->name('RestaurarTodos.ConfigVeiculos');
+	Route::get('ConfigVeiculos/RelatorioExcel', [ConfigVeiculos::class, 'exportarRelatorioExcel'])->name('get.Excel.ConfigVeiculos');
 
- 
+    Route::get('ConfigClientes', [ConfigClientes::class, 'index'])->name('list.ConfigClientes');
+	Route::post('ConfigClientes', [ConfigClientes::class, 'index'])->name('listP.ConfigClientes');
+    Route::get('ConfigClientes/criar', [ConfigClientes::class, 'create'])->name('form.store.ConfigClientes');
+    Route::post('ConfigClientes/criar', [ConfigClientes::class, 'store'])->name('store.ConfigClientes');
+    Route::get('ConfigClientes/editar/{id}', [ConfigClientes::class, 'edit'])->name('form.update.ConfigClientes');
+    Route::post('ConfigClientes/editar/{id}', [ConfigClientes::class, 'update'])->name('update.ConfigClientes');
+    Route::post('ConfigClientes/deletar/{id}', [ConfigClientes::class, 'delete'])->name('delete.ConfigClientes');
+	Route::post('ConfigClientes/deletarSelecionados/{id?}', [ConfigClientes::class, 'deleteSelected'])->name('deleteSelected.ConfigClientes');
+	Route::post('ConfigClientes/deletarTodos', [ConfigClientes::class, 'deletarTodos'])->name('deletarTodos.ConfigClientes');
+	Route::post('ConfigClientes/RestaurarTodos', [ConfigClientes::class, 'RestaurarTodos'])->name('RestaurarTodos.ConfigClientes');
+	Route::get('ConfigClientes/RelatorioExcel', [ConfigClientes::class, 'exportarRelatorioExcel'])->name('get.Excel.ConfigClientes');
+
+
 
 // #ModificaAqui
 
-   
+
     Route::get('Dashboard/Calendario', [Dashboard::class, 'Calendario'])->name('list.DashboardCalendario');
-    Route::get('Dashboard/{id?}', [Dashboard::class, 'index'])->name('list.Dashboard');    
+    Route::get('Dashboard/{id?}', [Dashboard::class, 'index'])->name('list.Dashboard');
 
 
     Route::get('cep/{cep}', [Utils::class, 'getAddressViaCep'])->name('get.address.viacep');
 
-    
+
 
     Route::post('toggle-column-table/', [Utils::class, 'toggleColumnsTables'])
         ->name('toggle.columns.tables');
