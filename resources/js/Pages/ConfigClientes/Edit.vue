@@ -117,7 +117,7 @@ const form = useForm({
 
     telefone: $propsPage?.value.ConfigClientes?.telefone,
 
-    endereco: $propsPage?.value.ConfigClientes?.observenderecoacao,
+    endereco: $propsPage?.value.ConfigClientes?.endereco,
 
     status: { value: $propsPage?.value.ConfigClientes?.status },
 

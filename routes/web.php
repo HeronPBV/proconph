@@ -14,13 +14,15 @@ use App\Http\Controllers\Dashboard;
 // ALTERAHEAD
 
 
+use App\Http\Controllers\ConfigPecas;
 use App\Http\Controllers\Permissions;
 use Illuminate\Support\Facades\Route;
 use App\Models\Office as ModelsOffice;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\ConfigVeiculos;
 use App\Http\Controllers\ConfigClientes;
+use App\Http\Controllers\ConfigVeiculos;
+use App\Http\Controllers\ConfigFornecedores;
 use App\Http\Controllers\ProtectedDownloads;
 use App\Http\Controllers\logsErrosController;
 
@@ -165,6 +167,30 @@ Route::get('logsUsuario', [logs::class, 'index'])->name('list.logsUsuario');
 	Route::post('ConfigClientes/deletarTodos', [ConfigClientes::class, 'deletarTodos'])->name('deletarTodos.ConfigClientes');
 	Route::post('ConfigClientes/RestaurarTodos', [ConfigClientes::class, 'RestaurarTodos'])->name('RestaurarTodos.ConfigClientes');
 	Route::get('ConfigClientes/RelatorioExcel', [ConfigClientes::class, 'exportarRelatorioExcel'])->name('get.Excel.ConfigClientes');
+
+    Route::get('ConfigPecas', [ConfigPecas::class, 'index'])->name('list.ConfigPecas');
+	Route::post('ConfigPecas', [ConfigPecas::class, 'index'])->name('listP.ConfigPecas');
+    Route::get('ConfigPecas/criar', [ConfigPecas::class, 'create'])->name('form.store.ConfigPecas');
+    Route::post('ConfigPecas/criar', [ConfigPecas::class, 'store'])->name('store.ConfigPecas');
+    Route::get('ConfigPecas/editar/{id}', [ConfigPecas::class, 'edit'])->name('form.update.ConfigPecas');
+    Route::post('ConfigPecas/editar/{id}', [ConfigPecas::class, 'update'])->name('update.ConfigPecas');
+    Route::post('ConfigPecas/deletar/{id}', [ConfigPecas::class, 'delete'])->name('delete.ConfigPecas');
+	Route::post('ConfigPecas/deletarSelecionados/{id?}', [ConfigPecas::class, 'deleteSelected'])->name('deleteSelected.ConfigPecas');
+	Route::post('ConfigPecas/deletarTodos', [ConfigPecas::class, 'deletarTodos'])->name('deletarTodos.ConfigPecas');
+	Route::post('ConfigPecas/RestaurarTodos', [ConfigPecas::class, 'RestaurarTodos'])->name('RestaurarTodos.ConfigPecas');
+	Route::get('ConfigPecas/RelatorioExcel', [ConfigPecas::class, 'exportarRelatorioExcel'])->name('get.Excel.ConfigPecas');
+
+    Route::get('ConfigFornecedores', [ConfigFornecedores::class, 'index'])->name('list.ConfigFornecedores');
+	Route::post('ConfigFornecedores', [ConfigFornecedores::class, 'index'])->name('listP.ConfigFornecedores');
+    Route::get('ConfigFornecedores/criar', [ConfigFornecedores::class, 'create'])->name('form.store.ConfigFornecedores');
+    Route::post('ConfigFornecedores/criar', [ConfigFornecedores::class, 'store'])->name('store.ConfigFornecedores');
+    Route::get('ConfigFornecedores/editar/{id}', [ConfigFornecedores::class, 'edit'])->name('form.update.ConfigFornecedores');
+    Route::post('ConfigFornecedores/editar/{id}', [ConfigFornecedores::class, 'update'])->name('update.ConfigFornecedores');
+    Route::post('ConfigFornecedores/deletar/{id}', [ConfigFornecedores::class, 'delete'])->name('delete.ConfigFornecedores');
+	Route::post('ConfigFornecedores/deletarSelecionados/{id?}', [ConfigFornecedores::class, 'deleteSelected'])->name('deleteSelected.ConfigFornecedores');
+	Route::post('ConfigFornecedores/deletarTodos', [ConfigFornecedores::class, 'deletarTodos'])->name('deletarTodos.ConfigFornecedores');
+	Route::post('ConfigFornecedores/RestaurarTodos', [ConfigFornecedores::class, 'RestaurarTodos'])->name('RestaurarTodos.ConfigFornecedores');
+	Route::get('ConfigFornecedores/RelatorioExcel', [ConfigFornecedores::class, 'exportarRelatorioExcel'])->name('get.Excel.ConfigFornecedores');
 
 
 
