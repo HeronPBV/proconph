@@ -8,10 +8,11 @@ use App\Models\Peca;
 use Inertia\Inertia;
 use App\Models\Office;
 use App\Models\Cliente;
+use App\Models\Fornecedor;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use App\Models\DisabledColumns;
 use App\Models\FornecedorPeca;
+use App\Models\DisabledColumns;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -222,10 +223,10 @@ class ConfigPecas extends Controller
             DB::table("config_pecas")->insert($save);
             $lastId = DB::getPdo()->lastInsertId();
 
-
             foreach ($request->fornecedores as $fornecedor) {
+
                 FornecedorPeca::create([
-                    'id_fornecedor' => $fornecedor['id']['value'],
+                    'id_fornecedor' => $fornecedor['id_fornecedor'],
                     'id_peca' => $lastId,
                     'preco' => $fornecedor['preco']
                 ]);
@@ -274,9 +275,11 @@ class ConfigPecas extends Controller
 
             $AcaoID = $this->return_id($IDConfigPecas);
 
-            $ConfigPecas = DB::table("config_pecas")
-            ->where("token", $IDConfigPecas)
-            ->first();
+            $ConfigPecas = Peca::where('token', $IDConfigPecas)->first();
+
+            $fornecedoresDaPeca = FornecedorPeca::where('id_peca', $ConfigPecas->id)->get();
+
+            $fornecedores = Fornecedor::where('deleted', 0)->get();
 
             $Acao = "Abriu a Tela de Edição do Módulo de ConfigPecas";
             $Logs = new logs;
@@ -284,6 +287,8 @@ class ConfigPecas extends Controller
 
             return Inertia::render("ConfigPecas/Edit", [
                 "ConfigPecas" => $ConfigPecas,
+                "FornecedoresPeca" => $fornecedoresDaPeca,
+                "Fornecedores" => $fornecedores
             ]);
 
         } catch (Exception $e) {
@@ -334,6 +339,36 @@ class ConfigPecas extends Controller
             DB::table("config_pecas")
                 ->where("token", $id)
                 ->update($save);
+
+            $Peca = Peca::where('token', $save['token'])->first();
+            $id_peca = $Peca->id;
+
+            $fornecedoresExistentes = FornecedorPeca::where('id_peca', $id_peca)->get()->keyBy('id_fornecedor');
+
+            foreach ($request->fornecedores as $fornecedor) {
+                $idFornecedor = $fornecedor['id_fornecedor'];
+                $preco = $fornecedor['preco'];
+
+                if ($fornecedoresExistentes->has($idFornecedor)) {
+
+                    $fornecedorExistente = $fornecedoresExistentes->get($idFornecedor);
+                    $fornecedorExistente->preco = $preco;
+                    $fornecedorExistente->save();
+
+                    $fornecedoresExistentes->forget($idFornecedor);
+                } else {
+                    FornecedorPeca::create([
+                        'id_fornecedor' => $idFornecedor,
+                        'id_peca' => $id_peca,
+                        'preco' => $preco,
+                    ]);
+                }
+            }
+
+            foreach ($fornecedoresExistentes as $fornecedorExistente) {
+                $fornecedorExistente->delete();
+            }
+
 
             $Acao = "Editou um registro no Módulo de ConfigPecas";
             $Logs = new logs;
