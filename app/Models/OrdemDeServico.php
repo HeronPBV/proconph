@@ -18,7 +18,7 @@ class OrdemDeServico extends Model
 
     public function veiculo()
     {
-        return $this->hasOne(Veiculo::class, 'id');
+        return $this->hasOne(Veiculo::class, 'id', 'id_veiculo');
     }
 
     public function servicos()

@@ -18,4 +18,9 @@ class FornecedorPeca extends Model
     {
         return $this->hasOne(Fornecedor::class, 'id', 'id_fornecedor');
     }
+
+    public function peca()
+    {
+        return $this->hasOne(Peca::class, 'id', 'id_peca');
+    }
 }

@@ -171,6 +171,37 @@
                                         </td>
                                     </tr>
 
+                                    <tr>
+                                        <td class='p-2 whitespace-nowrap'>
+                                            <div class='flex items-center'>
+                                                <div class='font-medium text-gray-800'>Ordens de serviço</div>
+                                            </div>
+                                        </td>
+                                        <td class='p-2 text-center'>
+                                            <Checkbox @click='markLine(range(364, 368), 10)' v-model='lineChecked'
+                                                class='ml-auto' :value='10' />
+                                        </td>
+                                        <td class='p-2 whitespace-nowrap text-center'>
+                                            <Checkbox v-model='checked' :value='364' />
+                                        </td>
+                                        <td class='p-2 whitespace-nowrap text-center'>
+                                            <Checkbox v-model='checked' :value='365' />
+
+                                        </td>
+                                        <td class='p-2 whitespace-nowrap text-center'>
+                                            <Checkbox v-model='checked' :value='366' />
+
+                                        </td>
+                                        <td class='p-2 whitespace-nowrap text-center'>
+                                            <Checkbox v-model='checked' :value='367' />
+
+                                        </td>
+                                        <td class='p-2 whitespace-nowrap text-center'>
+                                            <Checkbox v-model='checked' :value='368' />
+
+                                        </td>
+                                    </tr>
+
 
 
                                     <!-- #ModificaAqui -->

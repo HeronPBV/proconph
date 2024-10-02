@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ConfigClientes;
 use App\Http\Controllers\ConfigVeiculos;
 use App\Http\Controllers\ConfigFornecedores;
+use App\Http\Controllers\ConfigOrdemServico;
 use App\Http\Controllers\ProtectedDownloads;
 use App\Http\Controllers\logsErrosController;
 
@@ -191,6 +192,19 @@ Route::get('logsUsuario', [logs::class, 'index'])->name('list.logsUsuario');
 	Route::post('ConfigFornecedores/deletarTodos', [ConfigFornecedores::class, 'deletarTodos'])->name('deletarTodos.ConfigFornecedores');
 	Route::post('ConfigFornecedores/RestaurarTodos', [ConfigFornecedores::class, 'RestaurarTodos'])->name('RestaurarTodos.ConfigFornecedores');
 	Route::get('ConfigFornecedores/RelatorioExcel', [ConfigFornecedores::class, 'exportarRelatorioExcel'])->name('get.Excel.ConfigFornecedores');
+
+
+    Route::get('ConfigOrdemServico', [ConfigOrdemServico::class, 'index'])->name('list.ConfigOrdemServico');
+	Route::post('ConfigOrdemServico', [ConfigOrdemServico::class, 'index'])->name('listP.ConfigOrdemServico');
+    Route::get('ConfigOrdemServico/criar', [ConfigOrdemServico::class, 'create'])->name('form.store.ConfigOrdemServico');
+    Route::post('ConfigOrdemServico/criar', [ConfigOrdemServico::class, 'store'])->name('store.ConfigOrdemServico');
+    Route::get('ConfigOrdemServico/editar/{id}', [ConfigOrdemServico::class, 'edit'])->name('form.update.ConfigOrdemServico');
+    Route::post('ConfigOrdemServico/editar/{id}', [ConfigOrdemServico::class, 'update'])->name('update.ConfigOrdemServico');
+    Route::post('ConfigOrdemServico/deletar/{id}', [ConfigOrdemServico::class, 'delete'])->name('delete.ConfigOrdemServico');
+	Route::post('ConfigOrdemServico/deletarSelecionados/{id?}', [ConfigOrdemServico::class, 'deleteSelected'])->name('deleteSelected.ConfigOrdemServico');
+	Route::post('ConfigOrdemServico/deletarTodos', [ConfigOrdemServico::class, 'deletarTodos'])->name('deletarTodos.ConfigOrdemServico');
+	Route::post('ConfigOrdemServico/RestaurarTodos', [ConfigOrdemServico::class, 'RestaurarTodos'])->name('RestaurarTodos.ConfigOrdemServico');
+	Route::get('ConfigOrdemServico/RelatorioExcel', [ConfigOrdemServico::class, 'exportarRelatorioExcel'])->name('get.Excel.ConfigOrdemServico');
 
 
 

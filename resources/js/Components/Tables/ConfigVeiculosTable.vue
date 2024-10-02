@@ -186,7 +186,7 @@
                     <div class="flex items-center space-x-2">
                         <Checkbox @change="toggleColumns" :binary="true"
                             v-model="formColumns['columns']['proprietario']" />
-                        <span>Tipo de veículo</span>
+                        <span>Proprietário</span>
                     </div>
                     <div class="flex items-center space-x-2">
                         <Checkbox @change="toggleColumns" :binary="true"
