@@ -11,6 +11,7 @@ use App\Models\Cliente;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\DisabledColumns;
+use App\Models\FornecedorPeca;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -57,8 +58,9 @@ class ConfigPecas extends Controller
                 ->first()
                 ?->columns;
 
-            $ConfigPecas = Peca::selectRaw("*, DATE_FORMAT(created_at, '%d/%m/%Y - %H:%i:%s') as data_final")
-                ->where('deleted', '0');
+            $ConfigPecas = Peca::withCount('fornecedores')
+                ->selectRaw("config_pecas.*, DATE_FORMAT(config_pecas.created_at, '%d/%m/%Y - %H:%i:%s') as data_final")
+                ->where('config_pecas.deleted', '0');
 
 
             $sortableColumns = ['nome', 'descricao', 'status', 'created_at'];
@@ -164,7 +166,11 @@ class ConfigPecas extends Controller
             $Logs = new logs;
             $Logs->RegistraLog(1,$Modulo,$Acao);
 
-            return Inertia::render("ConfigPecas/Create",[ ]);
+            $fornecedores = DB::table('config_fornecedores')->where('deleted', 0)->get();
+
+            return Inertia::render("ConfigPecas/Create",[
+                "Fornecedores" => $fornecedores
+            ]);
 
         } catch (Exception $e) {
 
@@ -215,6 +221,17 @@ class ConfigPecas extends Controller
             $save = collect($save)->toArray();
             DB::table("config_pecas")->insert($save);
             $lastId = DB::getPdo()->lastInsertId();
+
+
+            foreach ($request->fornecedores as $fornecedor) {
+                FornecedorPeca::create([
+                    'id_fornecedor' => $fornecedor['id']['value'],
+                    'id_peca' => $lastId,
+                    'preco' => $fornecedor['preco']
+                ]);
+
+            }
+
 
             $Acao = "Inseriu um Novo Registro no Módulo de ConfigPecas";
             $Logs = new logs;

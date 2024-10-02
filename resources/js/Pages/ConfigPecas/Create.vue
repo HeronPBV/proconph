@@ -37,7 +37,49 @@
                     </span>
                 </div>
             </div>
-            <div class="flex space-x-5 mt-8">
+
+        </section>
+
+        <section class="mt-6 bg-white rounded-sm p-10 shadow-sm" v-if="currentNav == 1">
+            <div class="flex flex-col space-y-1">
+                <SectionTitle class="text-xs text-gray-600 font-bold uppercase">Fornecedores</SectionTitle>
+                <SectionTitle class="text-xs text-gray-600">Adição de fornecedores para a peça em questão.</SectionTitle>
+            </div>
+
+            <div class="mt-10 grid grid-cols-1 gap-6 max-md:grid-cols-1">
+
+                <div>
+                    <span class="p-float-label">
+                        <Dropdown class="w-full" v-model="formFornecedor.id_fornecedor" :options="fornecedores" optionLabel="name"
+                            dataKey="value" filter="true" />
+                        <label for="status" class="text-sm">Fornecedor</label>
+                    </span>
+                </div>
+
+                <div>
+                    <span class="p-float-label">
+                        <InputText v-model="formFornecedor.preco" id="preco" type="number" class="w-full" maxlength="50" />
+                        <label for="preco" class="text-sm">Preço</label>
+                    </span>
+                </div>
+
+                <div>
+                    <button class="p-2 flex rounded-md bg-lime-300 px-6 text-sm font-medium items-center" @click.prevent="addFornecedor"> Adicionar </button>
+                </div>
+
+                <div v-for="fornecedor in fornecedores_added" :key="fornecedor.id">
+
+                    <h1>{{ fornecedor.id.name }} - {{ `R$ ${fornecedor.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` }}</h1>
+                    <hr>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="mt-6 bg-white rounded-sm p-10 shadow-sm" v-if="currentNav == 1">
+            <div class="flex space-x-5">
                 <button type="submit" :disabled="sending"
                     class="p-2 flex rounded-md bg-primary text-white px-6 text-sm font-medium items-center"
                     :class="{ 'bg-opacity-80 cursor-not-allowed': submited }">
@@ -58,7 +100,10 @@
                 </Link>
             </div>
         </section>
+
+
     </form>
+
 </template>
 
 <script setup>
@@ -75,6 +120,7 @@ import { useToast } from "vue-toastification";
 
 const props = defineProps({
     errorBags: Object,
+    Fornecedores: Object
 });
 
 const toast = useToast();
@@ -88,15 +134,44 @@ const statusOption = [
     { name: "Inativo", value: "1" },
 ];
 
+const fornecedores = $propsPage?.value?.Fornecedores?.map((val) => {
+    return { name: val.nome, value: val.id }
+});
+
 const today = new Date();
 
 const submited = ref(false);
+
+const formFornecedor = ref({
+    id_fornecedor: null,
+    preco: null,
+});
+
+const fornecedores_added = ref([]);
+
+function addFornecedor() {
+
+    if (formFornecedor.value.id_fornecedor && formFornecedor.value.preco) {
+        fornecedores_added.value.push({
+            id: formFornecedor.value.id_fornecedor,
+            preco: parseFloat(formFornecedor.value.preco),
+        });
+
+        // Limpa os campos após adicionar
+        formFornecedor.value.id_fornecedor = null;
+        formFornecedor.value.preco = null;
+    }
+}
+
+
 
 const form = useForm({
 
     nome: "",
 
     descricao: "",
+
+    fornecedores: fornecedores_added,
 
     status: "",
 

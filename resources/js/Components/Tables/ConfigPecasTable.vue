@@ -168,6 +168,10 @@
                         <span>Descrição</span>
                     </div>
                     <div class="flex items-center space-x-2">
+                        <Checkbox @change="toggleColumns" :binary="true" v-model="formColumns['columns']['fornecedores_count']" />
+                        <span>Nº de fornecedores</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
                         <Checkbox @change="toggleColumns" :binary="true" v-model="formColumns['columns']['status']" />
                         <span>Status</span>
                     </div>
@@ -231,6 +235,25 @@
                                         ">
                                     <div class="flex">
                                         <span class="group-hover:text-indigo-800">Descrição</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5 ml-auto group-hover:text-indigo-800" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                                        </svg>
+                                    </div>
+                                </th>
+                                <th v-if="formColumns.columns.fornecedores_count" scope="col"
+                                    class="px-4 text-sm cursor-pointer text-center border-r group" @click="
+                                        orderBy = {
+                                            column: 'fornecedores_count',
+                                            sorting: sortTable(sortVal.fornecedores_count)
+                                                ? (sortVal.fornecedores_count = 1)
+                                                : (sortVal.fornecedores_count = 0),
+                                        }
+                                        ">
+                                    <div class="flex">
+                                        <span class="group-hover:text-indigo-800">Nº de fornecedores</span>
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             class="h-5 w-5 ml-auto group-hover:text-indigo-800" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -313,6 +336,14 @@
                                     <div class="flex items-center">
                                         <div>
                                             <div class="font-medium text-gray-900">{{ data?.descricao }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td v-if="formColumns?.columns?.fornecedores_count"
+                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                    <div class="flex items-center">
+                                        <div>
+                                            <div class="font-medium text-gray-900">{{ data?.fornecedores_count }}</div>
                                         </div>
                                     </div>
                                 </td>
@@ -414,6 +445,7 @@ const statusOption = [
 const sortVal = {
     nome: 1,
     descricao: 1,
+    fornecedores_count: 1,
     status: 1,
     created_at: 1,
 };
@@ -423,6 +455,7 @@ const formColumns = useForm({
     columns: {
         nome: validateColumnsVisibility("nome"),
         descricao: validateColumnsVisibility("descricao"),
+        fornecedores_count: validateColumnsVisibility("fornecedores_count"),
         status: validateColumnsVisibility("status"),
         created_at: validateColumnsVisibility("created_at"),
     },
