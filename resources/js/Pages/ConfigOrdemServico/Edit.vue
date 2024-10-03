@@ -82,6 +82,40 @@
         </section>
 
         <section class="mt-6 bg-white rounded-sm p-10 shadow-sm" v-if="currentNav == 1">
+            <div class="flex flex-col space-y-1">
+                <SectionTitle class="text-xs text-gray-600 font-bold uppercase">Serviços</SectionTitle>
+                <SectionTitle class="text-xs text-gray-600">Serviços realizados na OS em questão.</SectionTitle>
+            </div>
+
+            <div class="mt-10 grid grid-cols-1 gap-6 max-md:grid-cols-1">
+
+                <div>
+                    <span class="p-float-label">
+                        <Dropdown class="w-full" id="servicos" v-model="formServicos.id_servico" :options="servicos" optionLabel="name"
+                            dataKey="value" filter="true" />
+                        <label for="servicos" class="text-sm">Serviço</label>
+                    </span>
+                </div>
+
+                <div class="mb-2">
+                    <button class="p-2 flex rounded-md bg-lime-300 px-6 text-sm font-medium items-center" @click.prevent="addServico"> Adicionar </button>
+                </div>
+
+                <div v-for="servico in servicos_added" :key="servico.id_servico" class="flex flex-row items-center">
+
+                    <button class="bg-red-500 hover:bg-red-400 text-white font-bold p-1 rounded inline-flex items-center w-fit" @click.prevent="removeServico(servico)">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/></svg>
+                    </button>
+                    <h1 class="text-[16px] ml-2">
+                        R$ {{ servico.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }} - {{ servico.nome }}
+                    </h1>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="mt-6 bg-white rounded-sm p-10 shadow-sm" v-if="currentNav == 1">
             <div class="flex space-x-5">
                 <button type="submit" :disabled="sending"
                     class="p-2 flex rounded-md bg-primary text-white px-6 text-sm font-medium items-center"
@@ -123,10 +157,76 @@ const props = defineProps({
     OSFornecedorPecas: Object,
     FornecedorPeca: Object,
     Veiculos: Object,
+    Servicos: Object,
+    ServicosNaOS: Object
+});
+
+const servicos = $propsPage?.value?.Servicos?.map((val) => {
+    return { name: `R$ ${val.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} - ${val.nome}`, valor: val.valor, value: val.id }
+});
+
+const formServicos = ref({
+    id_servico: null
+});
+
+const servicos_added = ref([]);
+
+const getNomeServico = (id) => {
+    const tipo = servicos.find(t => t.value == id);
+    return tipo ? tipo.name : 'Desconhecido';
+};
+
+const getValorServico = (id) => {
+    const tipo = servicos.find(t => t.value == id);
+    return tipo ? tipo.valor : 'Desconhecido';
+};
+
+function addServico() {
+
+    if (formServicos.value.id_servico) {
+        servicos_added.value.push({
+
+            id_servico: formServicos.value.id_servico.value,
+
+            nome: getNomeServico(formServicos.value.id_servico.value),
+
+            valor: getValorServico(formServicos.value.id_servico.value)
+
+        });
+
+        // Limpa os campos após adicionar
+        formServicos.value.id_servico = null;
+        toast.success("Serviço adicionado com sucesso!");
+    }
+}
+
+function removeServico(Servico) {
+    const index = servicos_added.value.findIndex(f =>
+        f.id_servico === Servico.id_servico
+    );
+
+    if (index !== -1) {
+        servicos_added.value.splice(index, 1);
+        toast.success("Serviço removido com sucesso!");
+    } else {
+        toast.error("Serviço não encontrado!");
+    }
+}
+
+$propsPage?.value?.ServicosNaOS.forEach(ServicoNaOS => {
+        servicos_added.value.push({
+
+            id_servico: ServicoNaOS.id,
+
+            nome: ServicoNaOS.nome,
+
+            valor: ServicoNaOS.valor
+
+        });
 });
 
 const pecas_fornecedor = $propsPage?.value?.FornecedorPeca?.map((val) => {
-    return { name: `${val.peca.nome} - ${val.fornecedor.nome} - R$ ${val.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, value: val.id }
+    return { name: `R$ ${val.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} - ${val.peca.nome} - ${val.fornecedor.nome}`, value: val.id }
 });
 
 const getFornecedorPeca = (id) => {
@@ -207,6 +307,8 @@ const form = useForm({
     descricao: $propsPage?.value.ConfigOrdemServico?.descricao,
 
     fornecedor_pecas: fornecedor_pecas_added,
+
+    servicos: servicos_added,
 
     situacao: $propsPage?.value.ConfigOrdemServico?.situacao,
 

@@ -15,6 +15,7 @@ use App\Models\FornecedorPeca;
 use App\Models\OrdemDeServico;
 use App\Models\DisabledColumns;
 use App\Models\OSFornecedorPeca;
+use App\Models\Servico;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -172,9 +173,12 @@ class ConfigOrdemServico extends Controller
 
             $fornecedorPeca = FornecedorPeca::with(['fornecedor', 'peca'])->get();
 
+            $Servicos = Servico::all();
+
             return Inertia::render("ConfigOrdemServico/Create",[
                 'Veiculos' => $veiculos,
-                'FornecedorPeca' => $fornecedorPeca
+                'FornecedorPeca' => $fornecedorPeca,
+                'Servicos' => $Servicos
             ]);
 
         } catch (Exception $e) {
@@ -228,6 +232,8 @@ class ConfigOrdemServico extends Controller
             DB::table("ordens_servico")->insert($save);
             $lastId = DB::getPdo()->lastInsertId();
 
+            $OS = OrdemDeServico::where('token', $save['token'])->first();
+
             foreach ($request->fornecedor_pecas as $fornecedorPeca) {
 
                 OSFornecedorPeca::create([
@@ -236,6 +242,13 @@ class ConfigOrdemServico extends Controller
                 ]);
 
             }
+
+            foreach ($request->servicos as $servico) {
+
+                $OS->servicos()->attach($servico['id_servico']);
+
+            }
+
 
             $Acao = "Inseriu um Novo Registro no Módulo de ConfigOrdemServico";
             $Logs = new logs;
@@ -278,8 +291,7 @@ class ConfigOrdemServico extends Controller
 
             $AcaoID = $this->return_id($IDConfigOrdemServico);
 
-            $ConfigOrdemServico = DB::table("ordens_servico")
-            ->where("token", $IDConfigOrdemServico)
+            $ConfigOrdemServico = OrdemDeServico::where("token", $IDConfigOrdemServico)
             ->first();
 
             $Acao = "Abriu a Tela de Edição do Módulo de ConfigOrdemServico";
@@ -292,11 +304,17 @@ class ConfigOrdemServico extends Controller
 
             $FornecedorPeca = FornecedorPeca::with(['fornecedor', 'peca'])->get();
 
+            $Servicos = Servico::all();
+
+            $ServicosNaOS = $ConfigOrdemServico->servicos;
+
             return Inertia::render("ConfigOrdemServico/Edit", [
                 "ConfigOrdemServico" => $ConfigOrdemServico,
                 "OSFornecedorPecas" => $OSFornecedorPeca,
                 "FornecedorPeca" => $FornecedorPeca,
-                "Veiculos" => $veiculos
+                "Veiculos" => $veiculos,
+                "Servicos" => $Servicos,
+                "ServicosNaOS" => $ServicosNaOS
             ]);
 
         } catch (Exception $e) {
@@ -358,6 +376,12 @@ class ConfigOrdemServico extends Controller
 
             foreach ($request->fornecedor_pecas as $fornecedor_peca) {
                 $OS->FornecedorPeca()->attach($fornecedor_peca['id_fornecedor_peca']);
+            }
+
+            $OS->servicos()->detach();
+
+            foreach ($request->servicos as $servico) {
+                $OS->servicos()->attach($servico['id_servico']);
             }
 
 

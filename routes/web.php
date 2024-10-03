@@ -21,6 +21,7 @@ use App\Models\Office as ModelsOffice;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ConfigClientes;
+use App\Http\Controllers\ConfigServicos;
 use App\Http\Controllers\ConfigVeiculos;
 use App\Http\Controllers\ConfigFornecedores;
 use App\Http\Controllers\ConfigOrdemServico;
@@ -205,6 +206,18 @@ Route::get('logsUsuario', [logs::class, 'index'])->name('list.logsUsuario');
 	Route::post('ConfigOrdemServico/deletarTodos', [ConfigOrdemServico::class, 'deletarTodos'])->name('deletarTodos.ConfigOrdemServico');
 	Route::post('ConfigOrdemServico/RestaurarTodos', [ConfigOrdemServico::class, 'RestaurarTodos'])->name('RestaurarTodos.ConfigOrdemServico');
 	Route::get('ConfigOrdemServico/RelatorioExcel', [ConfigOrdemServico::class, 'exportarRelatorioExcel'])->name('get.Excel.ConfigOrdemServico');
+
+    Route::get('ConfigServicos', [ConfigServicos::class, 'index'])->name('list.ConfigServicos');
+	Route::post('ConfigServicos', [ConfigServicos::class, 'index'])->name('listP.ConfigServicos');
+    Route::get('ConfigServicos/criar', [ConfigServicos::class, 'create'])->name('form.store.ConfigServicos');
+    Route::post('ConfigServicos/criar', [ConfigServicos::class, 'store'])->name('store.ConfigServicos');
+    Route::get('ConfigServicos/editar/{id}', [ConfigServicos::class, 'edit'])->name('form.update.ConfigServicos');
+    Route::post('ConfigServicos/editar/{id}', [ConfigServicos::class, 'update'])->name('update.ConfigServicos');
+    Route::post('ConfigServicos/deletar/{id}', [ConfigServicos::class, 'delete'])->name('delete.ConfigServicos');
+	Route::post('ConfigServicos/deletarSelecionados/{id?}', [ConfigServicos::class, 'deleteSelected'])->name('deleteSelected.ConfigServicos');
+	Route::post('ConfigServicos/deletarTodos', [ConfigServicos::class, 'deletarTodos'])->name('deletarTodos.ConfigServicos');
+	Route::post('ConfigServicos/RestaurarTodos', [ConfigServicos::class, 'RestaurarTodos'])->name('RestaurarTodos.ConfigServicos');
+	Route::get('ConfigServicos/RelatorioExcel', [ConfigServicos::class, 'exportarRelatorioExcel'])->name('get.Excel.ConfigServicos');
 
 
 

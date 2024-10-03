@@ -106,12 +106,6 @@
                     </div>
                     <div>
                         <span class="p-float-label">
-                            <InputText v-model="form2.cpf" id="cpf" type="text" class="w-full" required />
-                            <label for="cpf" class="text-sm">CPF</label>
-                        </span>
-                    </div>
-                    <div>
-                        <span class="p-float-label">
                             <InputText v-model="form2.email" id="ano" type="text" class="w-full" required />
                             <label for="email" class="text-sm">E-mail</label>
                         </span>
@@ -182,10 +176,6 @@
                         <span>Nome</span>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <Checkbox @change="toggleColumns" :binary="true" v-model="formColumns['columns']['cpf']" />
-                        <span>CPF</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
                         <Checkbox @change="toggleColumns" :binary="true" v-model="formColumns['columns']['email']" />
                         <span>E-mail</span>
                     </div>
@@ -196,10 +186,6 @@
                     <div class="flex items-center space-x-2">
                         <Checkbox @change="toggleColumns" :binary="true" v-model="formColumns['columns']['endereco']" />
                         <span>Endereço</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <Checkbox @change="toggleColumns" :binary="true" v-model="formColumns['columns']['veiculos_count']" />
-                        <span>Nº de veículos</span>
                     </div>
                     <div class="flex items-center space-x-2">
                         <Checkbox @change="toggleColumns" :binary="true" v-model="formColumns['columns']['status']" />
@@ -240,8 +226,8 @@
                                         orderBy = {
                                             column: 'nome',
                                             sorting: sortTable(sortVal.nome)
-                                                ? (sortVal.placa = 1)
-                                                : (sortVal.placa = 0),
+                                                ? (sortVal.nome = 1)
+                                                : (sortVal.nome = 0),
                                         }
                                         ">
                                     <div class="flex">
