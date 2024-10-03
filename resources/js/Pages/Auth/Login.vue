@@ -10,11 +10,11 @@
 ">
         <!-- logo -->
         <div class=" mb-8 md:mb-20 w-full flex justify-center">
-          <img draggable="false" src="/images/logo_menu.png" class="w-1/2 md:w-60" alt="">
+          <img draggable="false" src="/images/logo_menu.png" class="w-1/2 md:w-100" alt="">
         </div>
         <!--inputs-->
-        <div class="space-y-5 mb-12 md:mb-60 w-full">    
-          <div class="w-4/5 md:w-2/3 mx-auto">    
+        <div class="space-y-5 mb-12 md:mb-60 w-full">
+          <div class="w-4/5 md:w-2/3 mx-auto">
             <span class="p-float-label">
               <InputText type="text" v-model="form.email" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required/>
               <label>E-mail *</label>
@@ -32,13 +32,13 @@
             <a :href="route('forgot.password')"
               class="text-primary uppercase font-extrabold text-[12px] block">ESQUECEU SUA SENHA?</a>
           </div>
-          
+
             <span class="text-xs text-center flex justify-center bg-red-500 rounded-md p-3 text-white" v-if="$page.props.errorBags?.default">
           Dados incorretos, favor verificar.
           </span>
           <!-- botão entrar-->
           <div class="w-4/5 md:w-2/3 mx-auto flex flex-col justify-between h-full">
-        
+
             <button type="submit"
               class="bg-primary text-white rounded-md py-4 w-full text-sm flex items-center justify-center hover:bg-MIGamarelo "
               :class="{ 'bg-opacity-70 cursor-wait': sending }">
@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="flex justify-center mt-4">
-          <span class="text-gray-400 text-[10px]"> &copy; 2023 - Projeto Estagio ProConph | Todos os direitos reservados. | Política de
+          <span class="text-gray-400 text-[10px]"> &copy; 2023 - Carrão bão - Mecânica automotiva | Todos os direitos reservados. | Política de
             Privacidade ©</span>
         </div>
       </div>

@@ -6,6 +6,27 @@
         </button>
     </Nav>
     <form @submit.prevent="submit">
+
+        <section class="mt-6 bg-white rounded-sm p-10 shadow-sm" v-if="currentNav == 1">
+
+            <h2 :class="{
+                    'bg-green-100 text-green-600 font-bold text-lg p-2 rounded-md': situacaoInicial === 'Aberta',
+                    'bg-yellow-100 text-yellow-600 font-bold text-lg p-2 rounded-md': situacaoInicial === 'Fechada',
+                    'bg-red-100 text-red-600 font-bold text-lg p-2 rounded-md': situacaoInicial === 'Cancelada'
+                }">
+                {{ situacaoInicial }}
+            </h2>
+            <br>
+            <p>Peças: R$ {{ totalPecas.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</p>
+            <p>Mão de obra: R$ {{ totalServicos.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</p>
+            <br>
+            <hr>
+            <br>
+            <p>Total: R$ {{ totalCusto.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</p>
+
+        </section>
+
+
         <section class="mt-6 bg-white rounded-sm p-10 shadow-sm" v-if="currentNav == 1">
             <div class="flex flex-col space-y-1">
                 <SectionTitle class="text-xs text-gray-600 font-bold uppercase">INFORMAÇÕES GERAIS</SectionTitle>
@@ -151,6 +172,11 @@ import MultiSelect from "primevue/multiselect";
 import Dropdown from "primevue/dropdown";
 import { useToast } from "vue-toastification";
 
+const totalPecas = ref(0);
+const totalServicos = ref(0);
+
+const totalCusto = computed(() => totalPecas.value + totalServicos.value);
+
 const props = defineProps({
     errorBags: Object,
     ConfigOrdemServico: Object,
@@ -160,6 +186,8 @@ const props = defineProps({
     Servicos: Object,
     ServicosNaOS: Object
 });
+
+const situacaoInicial = $propsPage?.value.ConfigOrdemServico?.situacao;
 
 const servicos = $propsPage?.value?.Servicos?.map((val) => {
     return { name: `R$ ${val.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} - ${val.nome}`, valor: val.valor, value: val.id }
@@ -184,15 +212,20 @@ const getValorServico = (id) => {
 function addServico() {
 
     if (formServicos.value.id_servico) {
+
+        const valorServico = Number(getValorServico(formServicos.value.id_servico.value));
+
         servicos_added.value.push({
 
             id_servico: formServicos.value.id_servico.value,
 
             nome: getNomeServico(formServicos.value.id_servico.value),
 
-            valor: getValorServico(formServicos.value.id_servico.value)
+            valor: valorServico
 
         });
+
+        totalServicos.value += valorServico;
 
         // Limpa os campos após adicionar
         formServicos.value.id_servico = null;
@@ -207,6 +240,9 @@ function removeServico(Servico) {
 
     if (index !== -1) {
         servicos_added.value.splice(index, 1);
+
+        totalServicos.value -= Number(Servico.valor);
+
         toast.success("Serviço removido com sucesso!");
     } else {
         toast.error("Serviço não encontrado!");
@@ -223,15 +259,23 @@ $propsPage?.value?.ServicosNaOS.forEach(ServicoNaOS => {
             valor: ServicoNaOS.valor
 
         });
+
+        totalServicos.value += Number(ServicoNaOS.valor);
+
 });
 
 const pecas_fornecedor = $propsPage?.value?.FornecedorPeca?.map((val) => {
-    return { name: `R$ ${val.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} - ${val.peca.nome} - ${val.fornecedor.nome}`, value: val.id }
+    return { name: `${val.peca.nome} - ${val.fornecedor.nome} - R$ ${val.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, value: val.id, preco: val.preco }
 });
 
 const getFornecedorPeca = (id) => {
     const tipo = pecas_fornecedor.find(t => t.value == id);
     return tipo ? tipo.name : 'Desconhecido';
+};
+
+const getPrecoFornecedorPeca = (id) => {
+    const tipo = pecas_fornecedor.find(t => t.value == id);
+    return tipo ? tipo.preco : 0;
 };
 
 const formFornecedorPeca = ref({
@@ -248,11 +292,18 @@ $propsPage?.value?.OSFornecedorPecas.forEach(OSFornecedorPeca => {
             nome: getFornecedorPeca(OSFornecedorPeca.id_fornecedor_peca)
 
         });
+
+        let precoPeca = Number( getPrecoFornecedorPeca(OSFornecedorPeca.id_fornecedor_peca) )
+
+        totalPecas.value += precoPeca;
 });
 
 function addFornecedorPeca() {
 
     if (formFornecedorPeca.value.id_fornecedor_peca) {
+
+        const precoPeca = Number( getPrecoFornecedorPeca(formFornecedorPeca.value.id_fornecedor_peca.value) );
+
         fornecedor_pecas_added.value.push({
 
             id_fornecedor_peca: formFornecedorPeca.value.id_fornecedor_peca.value,
@@ -261,6 +312,8 @@ function addFornecedorPeca() {
 
         });
 
+        totalPecas.value += precoPeca;
+
         // Limpa os campos após adicionar
         formFornecedorPeca.value.id_fornecedor_peca = null;
         toast.success("Peça adicionada com sucesso!");
@@ -268,12 +321,17 @@ function addFornecedorPeca() {
 }
 
 function removeFornecedorPeca(FornecedorPeca) {
+
     const index = fornecedor_pecas_added.value.findIndex(f =>
         f.id_fornecedor_peca === FornecedorPeca.id_fornecedor_peca
     );
 
     if (index !== -1) {
         fornecedor_pecas_added.value.splice(index, 1);
+
+        const precoPeca = Number( getPrecoFornecedorPeca(FornecedorPeca.id_fornecedor_peca) );
+        totalPecas.value -= precoPeca;
+
         toast.success("Peça removida com sucesso!");
     } else {
         toast.error("Peça não encontrada!");
