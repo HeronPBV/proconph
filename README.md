@@ -42,9 +42,12 @@ Antes de começar, verifique se você:
 
 ### Para instalar e executar o projeto localmente
 
-1º - Execute o seguinte comando no seu terminal:
+1º - Execute os seguintes comandos no seu terminal:
 ~~~
 git clone https://github.com/HeronPBV/proconph.git
+~~~
+~~~
+cd proconph
 ~~~
 
 <br>2º - Localize o arquivo proconph/.env.example e renomeie-o para .env, em seguida insira os seus dados de acesso ao MySQL nas linhas:
@@ -88,3 +91,4 @@ composer dump
 
 E pronto! Seu projeto já está configurado e pronto para rodar.
 <br> Acesse o endereço retornado ao executar o comando `php artisan serve` e bons testes!
+<br> Lembrando que o usuário padrão cadastrado tem o e-mail: `admin@admin.com` e a senha `123`
